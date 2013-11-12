@@ -1,0 +1,21 @@
+{
+  "name": "xapiwrapper-node",
+  "version": "0.0.0",
+  "description": "Use the XAPIWrapper library from within a server side NODE.JS environment",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adlnet/xapiwrapper-node.git"
+  },
+  "author": "Rob Chadwick, Tom Creighton",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/adlnet/xapiwrapper-node/issues"
+  },
+  "dependencies": {
+    "xmlhttprequest": "~1.6.0"
+  }
+}
