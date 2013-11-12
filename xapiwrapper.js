@@ -43,7 +43,7 @@ return (function(){
         conf['endpoint'] = "http://localhost:8000/xapi/";
         try
         {
-            conf['auth'] = "Basic " + (new Buffer("tom:1234", 'base64').toString('ascii'));
+          conf['auth'] = "Basic " + (new Buffer("tom:1234").toString('base64'));
         }
         catch (e)
         {
@@ -82,7 +82,7 @@ return (function(){
         }
 
         function updateAuth(obj, username, password){
-            obj.auth = "Basic "  (new Buffer(username + ":" + password, 'base64').toString('ascii'));
+            obj.auth = "Basic " + (new Buffer(username + ":" + password).toString('base64'));
         }
 
         if (verifyxapiversion && testConfig.call(this))
@@ -1048,9 +1048,9 @@ return (function(){
                     }
                 } else {
                     try {
-                        alert("There was a problem communicating with the Learning Record Store. ( " 
+                        console.log("There was a problem communicating with the Learning Record Store. ( " 
                             + xhr.status + " | " + xhr.response+ " )" + xhr.url);
-                    } catch (ex) {alert (ex.toString());}
+                    } catch (ex) {console.log(ex.toString());}
                     //throw new Error("debugger");
                     result = xhr;
                     return xhr;

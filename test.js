@@ -1,9 +1,11 @@
-var ADL = require('./xapiwrapper').configure("base","http://localhost:3000/test","http:",3000,"localhost");
+var ADL = require('./xapiwrapper').configure("base","https://lrs.adlnet.gov","https:",80,"lrs.adlnet.gov");
 console.log(ADL);
 
 var conf = {
-  "endpoint" : "http://lrs.adlnet.gov/xapi/",
-  "auth" : "Basic " + (new Buffer("tom:1234", 'base64').toString('ascii')),
+  "endpoint" : "https://lrs.adlnet.gov/XAPI/",
+  //"auth" : "Basic " + (new Buffer("tom:1234", 'base64').toString('utf8')),
+  "user": "tom",
+  "password": "1234"
 };
 
 ADL.XAPIWrapper.changeConfig(conf);
