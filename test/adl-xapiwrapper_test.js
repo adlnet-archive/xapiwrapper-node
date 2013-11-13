@@ -94,7 +94,6 @@ exports['statement_gets'] = {
                             test.equals(resp.statusCode, 200, 'more url response status was 200');
                             test.ok(JSON.parse(bdy)['statements'].length > 0, 'got at least 1 more statement');
                         }
-                        test.done();
                     });
                 }
                 test.done();
@@ -106,6 +105,68 @@ exports['statement_gets'] = {
         });
     }
 };
+
+
+exports['statement_posts'] = {
+    setUp: function (callback) {
+        this.opts = {
+            "url":"https://lrs.adlnet.gov/xapi/",
+            // "url":"http://localhost:8000/xapi/",
+            "auth":{
+                "user":"tom",
+                "pass":"1234"
+            },
+        };
+        this.mylrs = new adl_xapiwrapper.XAPIWrapper(this.opts);
+        callback();
+    },
+    tearDown: function (callback) {
+        // clean up
+        callback();
+    },
+    test1: function (test) {
+        var stmt = {
+            "actor":{"mbox":"mailto:tom@example.com"},
+            "verb":{"id":"http://test.example.com/tested"},
+            "object":{"id":"act:statement_posts/test1"}
+        };
+        this.mylrs.sendStatements(stmt, function(err, resp, bdy) {
+            if (err) {
+                test.ok(false, err);
+            }
+            else {
+                test.equals(resp.statusCode, 200, '200 response');
+            }
+            test.done();
+        });
+    },
+    test2: function (test) {
+        var stmt = {
+            "actor":{"mbox":"mailto:tom@example.com"},
+            "verb":{"id":"http://test.example.com/tested"},
+            "object":{"id":"act:statement_posts/test2/1"}
+        };
+        var stmt2 = {
+            "actor":{"mbox":"mailto:tom@example.com"},
+            "verb":{"id":"http://test.example.com/tested"},
+            "object":{"id":"act:statement_posts/test2/2"}
+        };
+
+        var stmts = [stmt,stmt2];
+
+        this.mylrs.sendStatements(stmts, function(err, resp, bdy) {
+            if (err) {
+                test.ok(false, err);
+            }
+            else {
+                test.equals(resp.statusCode, 200, '200 response');
+                test.equals(JSON.parse(bdy).length, 2, 'should get 2 ids back');
+            }
+            test.done();
+        });
+    }
+};
+
 
 function hijack(o, fn, params) {
     var origlog = console.log;
