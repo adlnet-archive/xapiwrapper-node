@@ -47,8 +47,8 @@ exports['xapiwrapper'] = {
 exports['statement_gets'] = {
     setUp: function (callback) {
         this.opts = {
-            // "url":"https://lrs.adlnet.gov/xapi/",
-            "url":"http://localhost:8000/xapi/",
+            "url":"https://lrs.adlnet.gov/xapi/",
+            // "url":"http://localhost:8000/xapi/",
             "auth":{
                 "user":"tom",
                 "pass":"1234"
@@ -110,8 +110,8 @@ exports['statement_gets'] = {
 exports['statement_posts'] = {
     setUp: function (callback) {
         this.opts = {
-            // "url":"https://lrs.adlnet.gov/xapi/",
-            "url":"http://localhost:8000/xapi/",
+            "url":"https://lrs.adlnet.gov/xapi/",
+            // "url":"http://localhost:8000/xapi/",
             "auth":{
                 "user":"tom",
                 "pass":"1234"
