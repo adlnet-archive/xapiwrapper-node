@@ -38,12 +38,22 @@ exports['xapiwrapper'] = {
     adl_xapiwrapper.debugLevel = 'info';
     test.equal(adl_xapiwrapper.debugLevel, 'info', 'debugLevel should be info');
     test.equal(hijack(adl_xapiwrapper,adl_xapiwrapper.log,['warn', 'this is a test']), 'warn: this is a test', 'this should be a logging message');
-    test.ok(new adl_xapiwrapper.XAPIWrapper(), 'should be able to create a new wrapper');
+    test.ok(new adl_xapiwrapper.XAPIWrapper({"url":theurl,"auth":{"user":"tom","pass":"1234"}}), 'should be able to create a new wrapper');
     test.notEqual(adl_xapiwrapper.ruuid, '', 'should return a uuid');
     var date = new Date();
     test.equal(adl_xapiwrapper.dateFromISOString(date.toISOString()).toString(), date.toString(), 'test iso string conversion');
     test.done();
   },
+  'test ctr errors': function(test) {
+    test.throws(function(){new adl_xapiwrapper.XAPIWrapper()});
+    test.throws(function(){new adl_xapiwrapper.XAPIWrapper({"url":"http://localhost:8000/xapi/"})});
+    test.throws(function(){new adl_xapiwrapper.XAPIWrapper({"url":"http://localhost:8000/xapi/", "auth":{"user":"tom"}})});
+    test.throws(function(){new adl_xapiwrapper.XAPIWrapper({"url":"http://localhost:8000/xapi/", "auth":{"pass":"1234"}})});
+    test.doesNotThrow(function(){new adl_xapiwrapper.XAPIWrapper({"url":"http://localhost:8000/xapi/", "auth":{"user":"tom","pass":"1234"}})});
+    test.doesNotThrow(function(){new adl_xapiwrapper.XAPIWrapper({"url":"http://localhost:8000/xapi/", "auth":{"username":"tom","pass":"1234"}})});
+    test.doesNotThrow(function(){new adl_xapiwrapper.XAPIWrapper({"url":"http://localhost:8000/xapi/", "auth":{"user":"tom","password":"1234"}})});
+    test.done();
+  }
 };
 
 exports['statement_gets'] = {
