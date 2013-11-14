@@ -1,6 +1,8 @@
 'use strict';
 
 var adl_xapiwrapper = require('../lib/adl-xapiwrapper.js');
+var theurl = "http://localhost:8000/xapi/";
+// var theurl = "https://lrs.adlnet.gov/xapi/";
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -47,8 +49,7 @@ exports['xapiwrapper'] = {
 exports['statement_gets'] = {
     setUp: function (callback) {
         this.opts = {
-            "url":"https://lrs.adlnet.gov/xapi/",
-            // "url":"http://localhost:8000/xapi/",
+            "url":theurl,
             "auth":{
                 "user":"tom",
                 "pass":"1234"
@@ -110,8 +111,7 @@ exports['statement_gets'] = {
 exports['statement_posts'] = {
     setUp: function (callback) {
         this.opts = {
-            "url":"https://lrs.adlnet.gov/xapi/",
-            // "url":"http://localhost:8000/xapi/",
+            "url":theurl,
             "auth":{
                 "user":"tom",
                 "pass":"1234"
@@ -167,6 +167,98 @@ exports['statement_posts'] = {
     }
 };
 
+exports['activity_get'] = {
+    setUp: function (callback) {
+        this.opts = {
+            "url":theurl,
+            "auth":{
+                "user":"tom",
+                "pass":"1234"
+            },
+        };
+        this.mylrs = new adl_xapiwrapper.XAPIWrapper(this.opts);
+        callback();
+    },
+    tearDown: function (callback) {
+        // clean up
+        callback();
+    },
+    test1: function (test) {
+        this.mylrs.getActivities("act:statement_posts/test2/1", function(err, resp, bdy) {
+            if (err) {
+                test.ok(false, err);
+            }
+            else {
+                test.equals(resp.statusCode, 200, '200 response');
+                var bdyobj = JSON.parse(bdy);
+                test.equals(bdyobj['id'], 'act:statement_posts/test2/1', 'expect activity requested');
+            }
+            test.done();
+        });
+    }
+};
+
+exports['activity_get'] = {
+    setUp: function (callback) {
+        this.opts = {
+            "url":theurl,
+            "auth":{
+                "user":"tom",
+                "pass":"1234"
+            },
+        };
+        this.mylrs = new adl_xapiwrapper.XAPIWrapper(this.opts);
+        callback();
+    },
+    tearDown: function (callback) {
+        // clean up
+        callback();
+    },
+    test1: function (test) {
+        this.mylrs.getActivities("act:statement_posts/test2/1", function(err, resp, bdy) {
+            if (err) {
+                test.ok(false, err);
+            }
+            else {
+                test.equals(resp.statusCode, 200, '200 response');
+                var bdyobj = JSON.parse(bdy);
+                test.equals(bdyobj['id'], 'act:statement_posts/test2/1', 'expect activity requested');
+            }
+            test.done();
+        });
+    }
+};
+
+exports['agent_get'] = {
+    setUp: function (callback) {
+        this.opts = {
+            "url":theurl,
+            "auth":{
+                "user":"tom",
+                "pass":"1234"
+            },
+        };
+        this.mylrs = new adl_xapiwrapper.XAPIWrapper(this.opts);
+        callback();
+    },
+    tearDown: function (callback) {
+        // clean up
+        callback();
+    },
+    test1: function (test) {
+        this.mylrs.getAgents({"mbox":"mailto:tom@example.com"}, function(err, resp, bdy) {
+            if (err) {
+                test.ok(false, err);
+            }
+            else {
+                test.equals(resp.statusCode, 200, '200 response');
+                var bdyobj = JSON.parse(bdy);
+                test.equals(bdyobj['mbox'], 'mailto:tom@example.com', 'expect agent requested');
+            }
+            test.done();
+        });
+    }
+};
 
 function hijack(o, fn, params) {
     var origlog = console.log;
