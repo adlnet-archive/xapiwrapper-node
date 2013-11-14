@@ -1,8 +1,8 @@
 'use strict';
 
 var adl_xapiwrapper = require('../lib/adl-xapiwrapper.js');
-// var theurl = "http://localhost:8000/xapi/";
-var theurl = "https://lrs.adlnet.gov/xapi/";
+var theurl = "http://localhost:8000/xapi/";
+// var theurl = "https://lrs.adlnet.gov/xapi/";
 
 /*
   ======== A Handy Little Nodeunit Reference ========

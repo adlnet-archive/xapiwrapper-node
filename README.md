@@ -6,8 +6,22 @@ ADL's Experience API wrapper
 Install the module with: `npm install adl-xapiwrapper`
 
 ```javascript
-var adl_xapiwrapper = require('adl-xapiwrapper');
-adl_xapiwrapper.awesome(); // "awesome"
+var adl = require('adl-xapiwrapper');
+var opts = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    },
+};
+var mylrs = new adl.XAPIWrapper(opts);
+
+mylrs.getStatements(null, null, function(err, resp, bdy) {
+    console.log(resp.statusCode);
+    console.log(bdy);
+});
+>> 200
+>> <statement id>
 ```
 
 ## Documentation
@@ -23,5 +37,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) 2013 tom creighton  
+Copyright (c) 2013 ADL  
 Licensed under the Apache, 2.0 licenses.
