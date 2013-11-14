@@ -18,10 +18,10 @@ var mylrs = new adl.XAPIWrapper(opts);
 
 mylrs.getStatements(null, null, function(err, resp, bdy) {
     console.log(resp.statusCode);
-    console.log(bdy);
+    console.log(JSON.parse(bdy));
 });
 >> 200
->> <statement id>
+>> [statements]
 ```
 
 ## Documentation
