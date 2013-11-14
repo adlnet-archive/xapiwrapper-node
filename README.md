@@ -1,6 +1,6 @@
-# adl-xapiwrapper [![Build Status](https://secure.travis-ci.org/adlnet/xapiwrapper-node.png?branch=master)](http://travis-ci.org/adlnet/xapiwrapper-node)
+# ADL xAPI Wrapper - Node [![Build Status](https://secure.travis-ci.org/adlnet/xapiwrapper-node.png?branch=master)](http://travis-ci.org/adlnet/xapiwrapper-node)
 
-ADL's Experience API wrapper
+ADL's Experience API wrapper for nodejs.
 
 ## Getting Started
 Install the module with: `npm install adl-xapiwrapper`
