@@ -1,6 +1,7 @@
-# adl-xapiwrapper [![Build Status](https://secure.travis-ci.org/adlnet/xapiwrapper-node.png?branch=master)](http://travis-ci.org/adlnet/xapiwrapper-node)
+# ADL xAPI Wrapper - Node [![Build Status](https://secure.travis-ci.org/adlnet/xapiwrapper-node.png?branch=master)](http://travis-ci.org/adlnet/xapiwrapper-node)
 
-ADL's Experience API wrapper
+ADL's Experience API wrapper for nodejs. The wrapper simplifies the process of communicating 
+with an xAPI LRS. 
 
 ## Getting Started
 Install the module with: `npm install adl-xapiwrapper`
@@ -21,7 +22,7 @@ mylrs.getStatements(null, null, function(err, resp, bdy) {
     console.log(JSON.parse(bdy));
 });
 >> 200
->> [statements]
+>> {statements:[..], more:""}
 ```
 
 ## Documentation
@@ -31,7 +32,8 @@ _(Coming soon)_
 _(Coming soon)_
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
+changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
 _(Nothing yet)_
