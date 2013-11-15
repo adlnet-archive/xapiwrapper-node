@@ -120,6 +120,26 @@ date.toDateString()
 >> 'Thu Nov 14 2013'
 ```
 ### Instance Functions
+#### Send Statements
+`function sendStatements(statements, callback)`  
+#### Get Statements
+`function getStatements(searchparams, more, callback)`  
+#### Get Activities
+`function getActivities(activityid, callback)`  
+#### Send State
+`function sendState(activityid, agent, stateid, registration, stateval, matchHash, noneMatchHash, callback)`  
+#### Get State
+`function getState(activityid, agent, stateid, registration, since, callback)`  
+#### Send Activity Profile
+`function sendActivityProfile(activityid, profileid, profileval, matchHash, noneMatchHash, callback)`  
+#### Get Activity Profile
+`function getActivityProfile(activityid, profileid, since, callback)`  
+#### Get Agents
+`function getAgents(agent, callback)`  
+#### Send Agent Profile
+`function sendAgentProfile(agent, profileid, profileval, matchHash, noneMatchHash, callback)`  
+#### Get Agent Profile
+`function getAgentProfile(agent, profileid, since, callback)`  
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
