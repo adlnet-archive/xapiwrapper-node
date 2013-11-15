@@ -56,6 +56,40 @@ exports['xapiwrapper'] = {
   }
 };
 
+exports['config_check'] = {
+    setUp: function (callback) {
+        callback();
+    },
+    test1: function (test) {
+        var opts = {
+            "url":theurl,
+            "auth":{
+                "user":"tom",
+                "pass":"1234"
+            }
+        };
+        var mylrs = new adl_xapiwrapper.XAPIWrapper(opts);
+        mylrs.testConfig(function(success) {
+            test.ok(success, 'config should be good');
+            test.done();
+        });
+    },
+    test2: function (test) {
+        var opts = {
+            "url":theurl,
+            "auth":{
+                "user":"tom",
+                "pass":"5678"
+            }
+        };
+        var mylrs = new adl_xapiwrapper.XAPIWrapper(opts);
+        mylrs.testConfig(function(success) {
+            test.ok(!success, 'config should be bad');
+            test.done();
+        });
+    }
+};
+
 exports['statement_gets'] = {
     setUp: function (callback) {
         this.opts = {
