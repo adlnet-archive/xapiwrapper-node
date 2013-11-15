@@ -65,6 +65,24 @@ adl.debugLevel = 'info';
 adl.log('info', 'this is an informational message');
 >> info: this is an informational message
 ```
+#### UUID  
+`function ruuid()`  
+Generates a UUID that can be used anywhere the Experience API Spec 
+specifies one, such as Statement ID or Registration.  
+```javascript
+adl.ruuid();
+>> '47df99dd-e75f-484d-a85b-78cc988ae7c7'
+```
+#### Date from ISO String
+`function dateFromISOString(isostring)`  
+Converts and ISO date time string into a JavaScript date object.  
+```javascript
+var date = adl.dateFromISOString(adl.build);
+date;
+>> Thu Nov 14 2013 15:14:00 GMT-0500 (EST)
+date.toDateString()
+>> 'Thu Nov 14 2013'
+```
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
 changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
