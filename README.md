@@ -6,6 +6,9 @@ with an xAPI LRS.
 ## Getting Started
 Install the module with: `npm install adl-xapiwrapper`
 
+Start the node Read-Eval-Print-Loop (REPL): `node` or `nodejs` depending on your installation.  
+See [node's documentation](http://nodejs.org/api/repl.html) for more information.  
+
 ```javascript
 var adl = require('adl-xapiwrapper');
 var opts = {
@@ -161,15 +164,19 @@ mylrs.sendStatements(stmt, function (err, resp, bdy) {
 `function getStatements(searchparams, more, callback)`  
 Sends a single or a list of statements to the LRS.
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `searchparams` - JSON object of search parameters. See [the xAPI Spec](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#723-getstatements) for parameters.
+* `more` - the url to more results. 
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
     * `response` - the response object  
     * `body` - the body of the response if there is one 
 
+###### Get all Statements
+
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -178,7 +185,72 @@ var myconfig = {
     }
 };
 var mylrs = new adl.XAPIWrapper(myconfig);
+mylrs.getStatements(null, null, function (err, resp, bdy) {
+    adl.log('info', resp.statusCode);
+    adl.log('info', bdy);
+    adl.log('info', JSON.parse(bdy).statements.length);
+});
+>> info: 200
+>> info: {"statements":[<statements>], "more":<url to more results>}
+>> info: 50 // depends on LRS
 ```
+
+###### Get more Statements
+
+```javascript
+var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+mylrs.getStatements(null, null, function (err, resp, bdy) {
+    adl.log('info', resp.statusCode);
+    adl.log('info', bdy);
+    var bdyobj = JSON.parse(bdy)
+    if (bdyobj.more) {
+        adl.log('info', 'going to get more statements');
+        mylrs.getStatements(null, bdyobj.more, function (err, resp, bdy) {
+            adl.log('info', resp.statusCode);
+            adl.log('info', bdy);
+        });
+    }
+});
+>> info: 200
+>> info: {"statements":[<statements>], "more":<url to more results>}
+>> info: going to get more statements
+>> info: 200
+>> info: {"statements":[<statements>], "more":<url to more results>}
+```
+
+###### Get Statements based on Search Parameters
+
+```javascript
+var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+var myopts = {"verb":"http://adlnet.gov/expapi/verbs/answered"};
+mylrs.getStatements(myopts, null, function (err, resp, bdy) {
+    adl.log('info', resp.statusCode);
+    adl.log('info', bdy);
+    adl.log('info', JSON.parse(bdy).statements.length);
+});
+>> info: 200
+>> info: {"statements":[<statements with verb 'answered'>], "more":<url to more results>}
+>> info: 50 // depends on LRS
+```
+
 #### Get Activities
 `function getActivities(activityid, callback)`  
 Sends a single or a list of statements to the LRS.
@@ -192,6 +264,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -214,6 +287,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -236,6 +310,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -258,6 +333,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -280,6 +356,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -302,6 +379,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -324,6 +402,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
@@ -346,6 +425,7 @@ Parameters:
 
 ```javascript
 var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
 var myconfig = {
     "url":"https://lrs.adlnet.gov/xapi/",
     "auth":{
