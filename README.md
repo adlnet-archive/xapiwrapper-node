@@ -253,9 +253,9 @@ mylrs.getStatements(myopts, null, function (err, resp, bdy) {
 
 #### Get Activities
 `function getActivities(activityid, callback)`  
-Sends a single or a list of statements to the LRS.
+Gets the complete Activity object from the LRS.
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `activityid` - the id of the Activity requested
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
@@ -273,6 +273,12 @@ var myconfig = {
     }
 };
 var mylrs = new adl.XAPIWrapper(myconfig);
+mylrs.getActivities("act:adlnet.gov/JsTetris_XAPI", function (err, resp, bdy) {
+    adl.log('info', resp.statusCode);
+    adl.log('info', bdy);
+});
+>> info: 200
+>> info: <complete Activity object> // depends on LRS
 ```
 #### Send State
 `function sendState(activityid, agent, stateid, registration, stateval, matchHash, noneMatchHash, callback)`  
