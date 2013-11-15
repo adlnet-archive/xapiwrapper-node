@@ -41,6 +41,42 @@ adl.debugLevel;
 >> 'warn'
 ```
 ### Module Functions
+#### XAPI Request
+`function xapi_request(options, data, callback)`  
+Encapsulates making requests to an LRS. See the section on this wrapper's 
+[instance functions](#instance-functions) for scripted ways to make common 
+calls to an LRS. This uses the request module. 
+[see requests](https://npmjs.org/package/request)  
+`options` - options object used by the request module. [see options](https://github.com/mikeal/request#requestoptions-callback)  
+`data` - the payload for POSTs and PUTs  
+`callback` - function to process after request has completed.  
+Parameters passed to callback:
+* `error` - an error message if something went wrong  
+* `response` - the response object  
+* `body` - the body of the response if there is one  
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myopts = {
+    "url":"https://lrs.adlnet.gov/xapi/statements",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    },
+    "method":"GET",
+    "qs":{
+        "limit":1
+    }
+};
+adl.debugLevel = 'info';
+adl.xapi_request(myopts, null, function (error, response, body) {
+    adl.log('info', response.statusCode);
+    adl.log('info', body);
+});
+>> info: 200
+>> info: {"statements": <statements>, "more": <more url>}
+```
+
 #### Hash 
 `function hash(string)`  
 Sha1 hash of a string. Used for hashing contents sent to 
@@ -83,6 +119,8 @@ date;
 date.toDateString()
 >> 'Thu Nov 14 2013'
 ```
+### Instance Functions
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
 changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
