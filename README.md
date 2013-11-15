@@ -27,17 +27,30 @@ mylrs.getStatements(null, null, function(err, resp, bdy) {
 
 ## Documentation and Examples
 ### Module Functions
-#### Hash
+#### Hash 
+`function hash(string)`  
 Sha1 hash of a string. Used for hashing contents sent to 
 the document endpoints (state, activity profile, agent profile) to 
-use for concurrency checks.
-`hash(str)`  
+use for concurrency checks.  
 ```javascript
 var doc = "This is my activity profile";
 var myhash = adl.hash(doc)
 ```
-
-
+#### Log
+`function log(level, message)`  
+Writes message to console based on level. Levels are `error`, `warn`, `info`.
+Level filtering can be changed by setting `adl.debugLevel`.
+```javascript
+var adl = require('adl-xapiwrapper');
+adl.debugLevel;
+>> 'warn'
+adl.log('info', 'this is an informational message');
+> undefined
+adl.debugLevel = 'info';
+>> 'info'
+adl.log('info', 'this is an informational message');
+>> info: this is an informational message
+```
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
 changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
