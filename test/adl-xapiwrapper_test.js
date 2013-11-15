@@ -242,37 +242,6 @@ exports['activity_get'] = {
     }
 };
 
-exports['activity_get'] = {
-    setUp: function (callback) {
-        this.opts = {
-            "url":theurl,
-            "auth":{
-                "user":"tom",
-                "pass":"1234"
-            },
-        };
-        this.mylrs = new adl_xapiwrapper.XAPIWrapper(this.opts);
-        callback();
-    },
-    tearDown: function (callback) {
-        // clean up
-        callback();
-    },
-    test1: function (test) {
-        this.mylrs.getActivities("act:statement_posts/test2/1", function(err, resp, bdy) {
-            if (err) {
-                test.ok(false, err);
-            }
-            else {
-                test.equals(resp.statusCode, 200, '200 response');
-                var bdyobj = JSON.parse(bdy);
-                test.equals(bdyobj['id'], 'act:statement_posts/test2/1', 'expect activity requested');
-            }
-            test.done();
-        });
-    }
-};
-
 exports['state'] = {
     setUp: function (callback) {
         this.opts = {
