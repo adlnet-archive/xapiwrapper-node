@@ -122,24 +122,239 @@ date.toDateString()
 ### Instance Functions
 #### Send Statements
 `function sendStatements(statements, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+adl.debugLevel = 'info';
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+
+var stmt = {
+    "actor" : {"mbox" : "mailto:tom@example.com"},
+    "verb" : {"id" : "http://adlnet.gov/expapi/verbs/answered",
+              "display" : {"en-US" : "answered"}},
+    "object" : {"id" : "http://adlnet.gov/expapi/activities/question"}
+};
+
+mylrs.sendStatements(stmt, function (err, resp, bdy) {
+    adl.log('info', resp.statusCode);
+    adl.log('info', bdy);
+});
+>> info: 200
+>> info: [<statement ids>]
+```
 #### Get Statements
 `function getStatements(searchparams, more, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Get Activities
 `function getActivities(activityid, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Send State
 `function sendState(activityid, agent, stateid, registration, stateval, matchHash, noneMatchHash, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Get State
 `function getState(activityid, agent, stateid, registration, since, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Send Activity Profile
 `function sendActivityProfile(activityid, profileid, profileval, matchHash, noneMatchHash, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Get Activity Profile
 `function getActivityProfile(activityid, profileid, since, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Get Agents
 `function getAgents(agent, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Send Agent Profile
 `function sendAgentProfile(agent, profileid, profileval, matchHash, noneMatchHash, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 #### Get Agent Profile
 `function getAgentProfile(agent, profileid, since, callback)`  
+Sends a single or a list of statements to the LRS.
+Parameters:
+* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one 
+
+```javascript
+var adl = require('adl-xapiwrapper');
+var myconfig = {
+    "url":"https://lrs.adlnet.gov/xapi/",
+    "auth":{
+        "user":"tom",
+        "pass":"1234"
+    }
+};
+var mylrs = new adl.XAPIWrapper(myconfig);
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
