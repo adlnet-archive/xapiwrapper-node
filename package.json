@@ -1,21 +1,33 @@
 {
-  "name": "xapiwrapper-node",
-  "version": "0.0.0",
-  "description": "Use the XAPIWrapper library from within a server side NODE.JS environment",
-  "main": "test.js",
+  "name": "adl-xapiwrapper",
+  "version": "0.1.0",
+  "description": "ADL's Experience API wrapper",
+  "main": "lib/adl-xapiwrapper.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "node test.js"
+    "test": "grunt nodeunit"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/adlnet/xapiwrapper-node.git"
   },
-  "author": "Rob Chadwick, Tom Creighton",
-  "license": "BSD-2-Clause",
+  "keywords": [
+    "ADL",
+    "Experience",
+    "API",
+    "wrapper",
+    "tin",
+    "can"
+  ],
+  "author": "ADL",
+  "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/adlnet/xapiwrapper-node/issues"
   },
+  "homepage": "https://github.com/adlnet/xapiwrapper-node",
   "dependencies": {
-    "xmlhttprequest": "~1.6.0"
+    "request": "~2.27.0"
   }
 }
