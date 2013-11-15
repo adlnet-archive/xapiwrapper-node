@@ -26,6 +26,20 @@ mylrs.getStatements(null, null, function(err, resp, bdy) {
 ```
 
 ## Documentation and Examples
+### Module Attributes
+`xapiversion` - the version of the Experience API Spec this conforms to  
+`build` - an ISO date representing when this script was built  
+`debugLevel` - the minimum logging level to process ['error','warn','info]  
+```javascript
+// these values will vary based on the version of wrapper you have
+var adl = require('adl-xapiwrapper');
+adl.xapiversion;
+>> '1.0.1'
+adl.build;
+>> '2013-11-14T20:14Z'
+adl.debugLevel;
+>> 'warn'
+```
 ### Module Functions
 #### Hash 
 `function hash(string)`  
