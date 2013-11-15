@@ -25,11 +25,18 @@ mylrs.getStatements(null, null, function(err, resp, bdy) {
 >> {statements:[..], more:""}
 ```
 
-## Documentation
-_(Coming soon)_
+## Documentation and Examples
+### Module Functions
+#### Hash
+Sha1 hash of a string. Used for hashing contents sent to 
+the document endpoints (state, activity profile, agent profile) to 
+use for concurrency checks.
+`hash(str)`  
+```javascript
+var doc = "This is my activity profile";
+var myhash = adl.hash(doc)
+```
 
-## Examples
-_(Coming soon)_
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
