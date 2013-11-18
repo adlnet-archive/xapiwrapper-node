@@ -572,9 +572,12 @@ mylrs.getActivityProfile(activityid, null, sincehere, function (err, resp, bdy) 
 
 #### Get Agents
 `function getAgents(agent, callback)`  
-Sends a single or a list of statements to the LRS.
+Gets a special Person object containing all the values 
+of an Agent the LRS knows about. The Person object's 
+identifying properties are arrays and it may have more 
+than one identifier. [See more about Person in the spec](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#getagents)
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `agent` - JSON object representing an agent ex: {"mbox":"mailto:tom@example.com"}
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
@@ -592,6 +595,15 @@ var myconfig = {
     }
 };
 var mylrs = new adl.XAPIWrapper(myconfig);
+
+mylrs.getAgents({"mbox":"mailto:tom@example.com"}, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "error in request: " + err);
+    } else {
+        adl.log("info", "the Person: " + bdy);
+    }
+});
+>> info: the Person: <Person object>
 ```
 #### Send Agent Profile
 `function sendAgentProfile(agent, profileid, profileval, matchHash, noneMatchHash, callback)`  
