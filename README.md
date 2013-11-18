@@ -431,32 +431,28 @@ mylrs.getState(myactid, agent, null, null, sincehere, function (err, resp, bdy) 
 
 #### Send Activity Profile
 `function sendActivityProfile(activityid, profileid, profileval, matchHash, noneMatchHash, callback)`  
-Sends a single or a list of statements to the LRS.
+Sends an Activity Profile to the LRS.
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `activityid` - the id of the Activity this profile is about
+* `profileid` - the id you want associated with this profile
+* `profileval` - the profile
+* `matchHash` - the hash of the profile to replace or * to replace any
+* `noneMatchHash` - the hash of the current profile or * to indicate no previous profile
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
     * `response` - the response object  
     * `body` - the body of the response if there is one 
 
-```javascript
-var adl = require('adl-xapiwrapper');
-adl.debugLevel = 'info';
-var myconfig = {
-    "url":"https://lrs.adlnet.gov/xapi/",
-    "auth":{
-        "user":"tom",
-        "pass":"1234"
-    }
-};
-var mylrs = new adl.XAPIWrapper(myconfig);
-```
 #### Get Activity Profile
 `function getActivityProfile(activityid, profileid, since, callback)`  
-Sends a single or a list of statements to the LRS.
-Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+Get activity profile from the LRS  
+Parameters:  
+* `activityid` - the id of the Activity this profile is about
+* `profileid` - (optional - if not included, the response will be a list of profileids 
+                associated with the activity)
+                the id of the profile
+* `since` - date object telling the LRS to return objects newer than the date supplied
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
