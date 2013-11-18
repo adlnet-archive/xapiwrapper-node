@@ -278,41 +278,43 @@ mylrs.getActivities("act:adlnet.gov/JsTetris_XAPI", function (err, resp, bdy) {
     adl.log('info', bdy);
 });
 >> info: 200
->> info: <complete Activity object> // depends on LRS
+>> info: <complete Activity object>
 ```
 #### Send State
 `function sendState(activityid, agent, stateid, registration, stateval, matchHash, noneMatchHash, callback)`  
-Sends a single or a list of statements to the LRS.
+Sends state information about the agents experience of the activity.  
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `activityid` - the id of the Activity this state is about
+* `agent` - the agent this Activity state is related to 
+* `stateid` - the id you want associated with this state
+* `registration` - (optional) the registraton id associated with this state
+* `stateval` - the state
+* `matchHash` - the hash of the state to replace or * to replace any
+* `noneMatchHash` - the hash of the current state or * to indicate no previous state
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
     * `response` - the response object  
     * `body` - the body of the response if there is one 
 
-```javascript
-var adl = require('adl-xapiwrapper');
-adl.debugLevel = 'info';
-var myconfig = {
-    "url":"https://lrs.adlnet.gov/xapi/",
-    "auth":{
-        "user":"tom",
-        "pass":"1234"
-    }
-};
-var mylrs = new adl.XAPIWrapper(myconfig);
-```
 #### Get State
 `function getState(activityid, agent, stateid, registration, since, callback)`  
-Sends a single or a list of statements to the LRS.
+Get activity state from the LRS  
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `activityid` - the id of the Activity this state is about
+* `agent` - the agent this Activity state is related to 
+* `stateid` - (optional - if not included, the response will be a list of stateids 
+                          associated with the activity and agent)
+                          the id you want associated with this state
+* `registration` - (optional) the registraton id associated with this state
+* `since` - date object telling the LRS to return objects newer than the date supplied
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
     * `response` - the response object  
     * `body` - the body of the response if there is one 
+
+###### Send / Retrieve New Activity state  
 
 ```javascript
 var adl = require('adl-xapiwrapper');
@@ -325,7 +327,108 @@ var myconfig = {
     }
 };
 var mylrs = new adl.XAPIWrapper(myconfig);
+
+var myactid = "http://example.com/activity/trails/appalachian";
+var agent = {"mbox":"mailto:hikerbob@example.com"};
+var mystateid = "training:appalachian-trail";
+var mystate = {"trees":["hemlock","blue spruce"],"scene":"forest"};
+
+mylrs.sendState(myactid, agent, mystateid, null, mystate, null, "*", function (err, resp, bdy) {
+    if (err) {
+        adl.log("info", "got an error");
+    } else {
+        adl.log("info", "response status: " + resp.statusCode);
+    }
+});
+>> info: response status: 204
+
+mylrs.getState(myactid, agent, mystateid, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("info", "got an error");
+    } else {
+        adl.log("info", "status code: " + resp.statusCode);
+        adl.log("info", "the state: " + bdy);
+    }
+});
+>> info: status code: 200
+>> info: the state: {"trees":["hemlock","blue spruce"],"scene":"forest"}
 ```
+
+###### Change Activity State
+
+```javascript
+var statehash = adl.hash(JSON.stringify(mystate));
+mystate['checkpoint'] = "pa-w-blaze-6";
+mylrs.sendState(myactid, agent, mystateid, null, mystate, statehash, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("info", "got an error");
+    } else {
+        adl.log("info", "status code: " + resp.statusCode);
+    }
+});
+>> info: status code: 204
+
+mylrs.getState(myactid, agent, mystateid, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("info", "got an error");
+    }
+    else {
+        adl.log("info", "state: " + bdy);
+    }
+});
+>> info: state: {"checkpoint": "pa-w-blaze-6", "scene": "forest", "trees": ["hemlock", "blue spruce"]}
+```
+
+###### Get all state ids for given Activity and Agent
+
+```javascript
+mylrs.getState(myactid, agent, null, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("info", "got an error");
+    }
+    else {
+        adl.log("info", "state ids: " + bdy);
+    }
+});
+>> info: state ids: ["training:appalachian-trail"]
+```
+
+###### Get state ids for a given Activity and Agent since a specified time
+
+```javascript
+var sincehere = new Date()
+var newstateid = "content:settings";
+var newstate = {"fps":"30","resolution":"1680x1050"};
+mylrs.sendState(myactid, agent, newstateid, null, newstate, null, "*", function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "error with request: " + err);
+    } else {
+        adl.log("info", "status: " + resp.statusCode);
+    }
+});
+>> info: status: 204
+
+// get all state ids
+mylrs.getState(myactid, agent, null, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "error with request: " + err);
+    } else {
+        adl.log("info", "state ids: " + bdy);
+    }
+});
+>> info: state ids: ["content:settings", "training:appalachian-trail"]
+
+// get ids of states saved since ..
+mylrs.getState(myactid, agent, null, null, sincehere, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "error with request: " + err);
+    } else {
+        adl.log("info", "state ids since " + sincehere + ": " + bdy);
+    }
+});
+>> info: state ids since Mon Nov 18 2013 09:31:15 GMT-0500 (EST): ["content:settings"]
+```
+
 #### Send Activity Profile
 `function sendActivityProfile(activityid, profileid, profileval, matchHash, noneMatchHash, callback)`  
 Sends a single or a list of statements to the LRS.
