@@ -761,8 +761,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-* 0.2.0 - Initial commit and release to npm
 * 0.2.1 - Update of Readme
+* 0.2.0 - Initial commit and release to npm
 
 ## License
 Copyright (c) 2013 ADL  
