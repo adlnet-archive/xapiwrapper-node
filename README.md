@@ -114,7 +114,7 @@ adl.ruuid();
 ```
 #### Date from ISO String
 `function dateFromISOString(isostring)`  
-Converts and ISO date time string into a JavaScript date object.  
+Converts an ISO date time string into a JavaScript date object.  
 ```javascript
 var date = adl.dateFromISOString(adl.build);
 date;
@@ -162,7 +162,9 @@ mylrs.sendStatements(stmt, function (err, resp, bdy) {
 ```
 #### Get Statements
 `function getStatements(searchparams, more, callback)`  
-Sends a single or a list of statements to the LRS.  
+Retrieves a [Statement Results](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#retstmts) 
+object from the LRS containing Statements that matched the search criteria and a possible URL in the 
+event more Statements exist that match the criteria.  
 Parameters:
 * `searchparams` - JSON object of search parameters. See [the xAPI Spec](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#723-getstatements) for parameters.
 * `more` - the url to more results. 
@@ -253,7 +255,8 @@ mylrs.getStatements(myopts, null, function (err, resp, bdy) {
 
 #### Get Activities
 `function getActivities(activityid, callback)`  
-Gets the complete Activity object from the LRS.  
+Gets the complete [Activity](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#4141-when-the-objecttype-is-activity) 
+object from the LRS.  
 Parameters:
 * `activityid` - the id of the Activity requested
 * `callback` - function to process after request has completed.  
@@ -282,10 +285,10 @@ mylrs.getActivities("act:adlnet.gov/JsTetris_XAPI", function (err, resp, bdy) {
 ```
 #### Send State
 `function sendState(activityid, agent, stateid, registration, stateval, matchHash, noneMatchHash, callback)`  
-Sends state information about the agents experience of the activity.  
+Sends state information about the agent's experience of the activity.  
 Parameters:
 * `activityid` - the id of the Activity this state is about
-* `agent` - the agent this Activity state is related to 
+* `agent` - the Agent this Activity state is related to 
 * `stateid` - the id you want associated with this state
 * `registration` - (optional) the registraton id associated with this state
 * `stateval` - the state
@@ -302,7 +305,7 @@ Parameters:
 Get activity state from the LRS  
 Parameters:
 * `activityid` - the id of the Activity this state is about
-* `agent` - the agent this Activity state is related to 
+* `agent` - the Agent this Activity state is related to 
 * `stateid` - (optional - if not included, the response will be a list of stateids 
                           associated with the activity and agent)
                           the id you want associated with this state
@@ -448,7 +451,7 @@ Get activity profile from the LRS
 Parameters:  
 * `activityid` - the id of the Activity this profile is about
 * `profileid` - (optional - if not included, the response will be a list of profileids 
-                associated with the activity)
+                associated with the Activity)
                 the id of the profile
 * `since` - date object telling the LRS to return objects newer than the date supplied
 * `callback` - function to process after request has completed.  
@@ -577,7 +580,7 @@ of an Agent the LRS knows about. The Person object's
 identifying properties are arrays and it may have more 
 than one identifier. [See more about Person in the spec](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#getagents)  
 Parameters:
-* `agent` - JSON object representing an agent ex: {"mbox":"mailto:tom@example.com"}
+* `agent` - JSON object representing an Agent ex: {"mbox":"mailto:tom@example.com"}
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
@@ -609,7 +612,7 @@ mylrs.getAgents({"mbox":"mailto:tom@example.com"}, function (err, resp, bdy) {
 `function sendAgentProfile(agent, profileid, profileval, matchHash, noneMatchHash, callback)`  
 Sends an Agent Profile to the LRS.  
 Parameters:
-* `agent` - the agent this profile is related to
+* `agent` - the Agent this profile is related to
 * `profileid` - the id you want associated with this profile
 * `profileval` - the profile
 * `matchHash` - the hash of the profile to replace or * to replace any
@@ -624,7 +627,7 @@ Parameters:
 `function getAgentProfile(agent, profileid, since, callback)`  
 Gets an Agent Profile from the LRS.  
 Parameters:
-* `agent` - the agent associated with this profile
+* `agent` - the Agent associated with this profile
 * `profileid` - (optional - if not included, the response will be a list of profileids 
                 associated with the agent)
                 the id of the profile
