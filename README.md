@@ -429,7 +429,7 @@ mylrs.getState(myactid, agent, null, null, sincehere, function (err, resp, bdy) 
 
 #### Send Activity Profile
 `function sendActivityProfile(activityid, profileid, profileval, matchHash, noneMatchHash, callback)`  
-Sends an Activity Profile to the LRS.
+Sends an Activity Profile to the LRS.  
 Parameters:
 * `activityid` - the id of the Activity this profile is about
 * `profileid` - the id you want associated with this profile
@@ -607,37 +607,35 @@ mylrs.getAgents({"mbox":"mailto:tom@example.com"}, function (err, resp, bdy) {
 ```
 #### Send Agent Profile
 `function sendAgentProfile(agent, profileid, profileval, matchHash, noneMatchHash, callback)`  
-Sends a single or a list of statements to the LRS.
+Sends an Agent Profile to the LRS.  
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `agent` - the agent this profile is related to
+* `profileid` - the id you want associated with this profile
+* `profileval` - the profile
+* `matchHash` - the hash of the profile to replace or * to replace any
+* `noneMatchHash` - the hash of the current profile or * to indicate no previous profile
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
     * `response` - the response object  
     * `body` - the body of the response if there is one 
 
-```javascript
-var adl = require('adl-xapiwrapper');
-adl.debugLevel = 'info';
-var myconfig = {
-    "url":"https://lrs.adlnet.gov/xapi/",
-    "auth":{
-        "user":"tom",
-        "pass":"1234"
-    }
-};
-var mylrs = new adl.XAPIWrapper(myconfig);
-```
 #### Get Agent Profile
 `function getAgentProfile(agent, profileid, since, callback)`  
-Sends a single or a list of statements to the LRS.
+Gets an Agent Profile from the LRS.  
 Parameters:
-* `statements` - the single statement as a JSON object, or list of statements as a JSON array of objects
+* `agent` - the agent associated with this profile
+* `profileid` - (optional - if not included, the response will be a list of profileids 
+                associated with the agent)
+                the id of the profile
+* `since` - date object telling the LRS to return objects newer than the date supplied
 * `callback` - function to process after request has completed.  
     * Parameters passed to callback:
     * `error` - an error message if something went wrong  
     * `response` - the response object  
     * `body` - the body of the response if there is one 
+
+###### Send / Retrieve New Activity Profile 
 
 ```javascript
 var adl = require('adl-xapiwrapper');
@@ -650,6 +648,112 @@ var myconfig = {
     }
 };
 var mylrs = new adl.XAPIWrapper(myconfig);
+
+var profile = {"competencies":["http://adlnet.gov/competency/sitting-quietly", 
+                               "http://adlnet.gov/competency/watching-tv"], 
+               "current path":"http://adlnet.gov/competency/knitting"};
+var agent = {"mbox":"mailto:tom@example.com"};
+var profileid = "competencies";
+
+mylrs.sendAgentProfile(agent, profileid, profile, null, "*", function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "status: " + resp.statusCode);
+    }
+});
+>> info: status: 204
+
+mylrs.getAgentProfile(agent, profileid, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile: " + bdy);
+    }
+});
+>> info: profile: {"competencies":["http://adlnet.gov/competency/sitting-quietly",
+                                   "http://adlnet.gov/competency/watching-tv"],
+                   "current path":"http://adlnet.gov/competency/knitting"}
+```
+
+###### Update Activity Profile 
+
+```javascript
+var profhash = adl.hash(JSON.stringify(profile));
+profile["competencies"].push(profile['current path']);
+profile["current path"] = "http://adlnet.gov/competency/juggling";
+
+mylrs.sendAgentProfile(agent, profileid, profile, profhash, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "status: " + resp.statusCode);
+    }
+});
+>> info: status: 204
+
+mylrs.getAgentProfile(agent, profileid, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile: " + bdy);
+    }
+});
+>> info: profile: {"competencies": ["http://adlnet.gov/competency/sitting-quietly", 
+                                    "http://adlnet.gov/competency/watching-tv", 
+                                    "http://adlnet.gov/competency/knitting"], 
+                   "current path": "http://adlnet.gov/competency/juggling"}
+```
+
+###### Get all profiles about a specific Activity
+
+```javascript
+mylrs.getAgentProfile(agent, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile ids: " + bdy);
+    }
+});
+>> info: profile ids: ["competencies"]
+```
+
+###### Get profiles about an Activity since a certain time
+
+```javascript
+var sincehere = new Date();
+
+var newprofile = {"another" : "profile"};
+var newprofileid = "another:profile";
+
+mylrs.sendAgentProfile(agent, newprofileid, newprofile, null, "*", function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "status: " + resp.statusCode);
+    }
+});
+>> info: status: 204
+
+// get all ids
+mylrs.getAgentProfile(agent, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile ids: " + bdy);
+    }
+});
+>> info: profile ids: ["competencies", "another:profile"]
+
+// get ids of Activity Profiles saved since date...
+mylrs.getAgentProfile(agent, null, sincehere, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile ids: " + bdy);
+    }
+});
+>> info: profile ids: ["another:profile"]
 ```
 
 ## Contributing
@@ -657,7 +761,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+* 0.2.0 - Initial commit and release to npm
+* 0.2.1 - Update of Readme
 
 ## License
 Copyright (c) 2013 ADL  
