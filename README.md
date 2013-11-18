@@ -335,7 +335,7 @@ var mystate = {"trees":["hemlock","blue spruce"],"scene":"forest"};
 
 mylrs.sendState(myactid, agent, mystateid, null, mystate, null, "*", function (err, resp, bdy) {
     if (err) {
-        adl.log("info", "got an error");
+        adl.log("error", "got an error");
     } else {
         adl.log("info", "response status: " + resp.statusCode);
     }
@@ -344,7 +344,7 @@ mylrs.sendState(myactid, agent, mystateid, null, mystate, null, "*", function (e
 
 mylrs.getState(myactid, agent, mystateid, null, null, function (err, resp, bdy) {
     if (err) {
-        adl.log("info", "got an error");
+        adl.log("error", "got an error");
     } else {
         adl.log("info", "status code: " + resp.statusCode);
         adl.log("info", "the state: " + bdy);
@@ -361,7 +361,7 @@ var statehash = adl.hash(JSON.stringify(mystate));
 mystate['checkpoint'] = "pa-w-blaze-6";
 mylrs.sendState(myactid, agent, mystateid, null, mystate, statehash, null, function (err, resp, bdy) {
     if (err) {
-        adl.log("info", "got an error");
+        adl.log("error", "got an error");
     } else {
         adl.log("info", "status code: " + resp.statusCode);
     }
@@ -370,9 +370,8 @@ mylrs.sendState(myactid, agent, mystateid, null, mystate, statehash, null, funct
 
 mylrs.getState(myactid, agent, mystateid, null, null, function (err, resp, bdy) {
     if (err) {
-        adl.log("info", "got an error");
-    }
-    else {
+        adl.log("error", "got an error");
+    } else {
         adl.log("info", "state: " + bdy);
     }
 });
@@ -384,9 +383,8 @@ mylrs.getState(myactid, agent, mystateid, null, null, function (err, resp, bdy) 
 ```javascript
 mylrs.getState(myactid, agent, null, null, null, function (err, resp, bdy) {
     if (err) {
-        adl.log("info", "got an error");
-    }
-    else {
+        adl.log("error", "got an error");
+    } else {
         adl.log("info", "state ids: " + bdy);
     }
 });
@@ -459,6 +457,8 @@ Parameters:
     * `response` - the response object  
     * `body` - the body of the response if there is one 
 
+###### Send / Retrieve New Activity Profile 
+
 ```javascript
 var adl = require('adl-xapiwrapper');
 adl.debugLevel = 'info';
@@ -470,6 +470,28 @@ var myconfig = {
     }
 };
 var mylrs = new adl.XAPIWrapper(myconfig);
+
+var profile = {"type":"question"};
+var activityid = "http://adlnet.gov/expapi/activities/question";
+var profileid = "question:profile";
+
+mylrs.sendActivityProfile(activityid, profileid, profile, null, "*", function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "status: " + resp.statusCode);
+    }
+});
+>> info: status: 204
+
+mylrs.getActivityProfile(activityid, profileid, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile: " + bdy);
+    }
+});
+>> info: profile: {"type":"question"}
 ```
 #### Get Agents
 `function getAgents(agent, callback)`  
