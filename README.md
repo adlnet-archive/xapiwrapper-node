@@ -493,6 +493,83 @@ mylrs.getActivityProfile(activityid, profileid, null, function (err, resp, bdy) 
 });
 >> info: profile: {"type":"question"}
 ```
+
+###### Update Activity Profile 
+
+```javascript
+var profhash = adl.hash(JSON.stringify(profile));
+profile["updated"] = true;
+
+mylrs.sendActivityProfile(activityid, profileid, profile, profhash, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "status: " + resp.statusCode);
+    }
+});
+>> info: status: 204
+
+mylrs.getActivityProfile(activityid, profileid, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile: " + bdy);
+    }
+});
+>> info: profile: {"updated": true, "type": "question"}
+```
+
+###### Get all profiles about a specific Activity
+
+```javascript
+mylrs.getActivityProfile(activityid, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile ids: " + bdy);
+    }
+});
+>> info: profile ids: ["question:profile"]
+```
+
+###### Get profiles about an Activity since a certain time
+
+```javascript
+var sincehere = new Date();
+
+var newprofile = {"another" : "profile"};
+var newprofileid = "another:profile";
+
+mylrs.sendActivityProfile(activityid, newprofileid, newprofile, null, "*", function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "status: " + resp.statusCode);
+    }
+});
+>> info: status: 204
+
+// get all ids
+mylrs.getActivityProfile(activityid, null, null, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile ids: " + bdy);
+    }
+});
+>> info: profile ids: ["question:profile", "another:profile"]
+
+// get ids of Activity Profiles saved since date...
+mylrs.getActivityProfile(activityid, null, sincehere, function (err, resp, bdy) {
+    if (err) {
+        adl.log("error", "request error: " + err);
+    } else {
+        adl.log("info", "profile ids: " + bdy);
+    }
+});
+>> info: profile ids: ["another:profile"]
+```
+
 #### Get Agents
 `function getAgents(agent, callback)`  
 Sends a single or a list of statements to the LRS.
