@@ -50,13 +50,13 @@ Encapsulates making requests to an LRS. See the section on this wrapper's
 [instance functions](#instance-functions) for scripted ways to make common 
 calls to an LRS. This uses the request module. 
 [see requests](https://npmjs.org/package/request)  
-`options` - options object used by the request module. [see options](https://github.com/mikeal/request#requestoptions-callback)  
-`data` - the payload for POSTs and PUTs  
-`callback` - function to process after request has completed.  
-Parameters passed to callback:
-* `error` - an error message if something went wrong  
-* `response` - the response object  
-* `body` - the body of the response if there is one  
+* `options` - options object used by the request module. [see options](https://github.com/mikeal/request#requestoptions-callback)  
+* `data` - the payload for POSTs and PUTs  
+* `callback` - function to process after request has completed.  
+    * Parameters passed to callback:
+    * `error` - an error message if something went wrong  
+    * `response` - the response object  
+    * `body` - the body of the response if there is one  
 
 ```javascript
 var adl = require('adl-xapiwrapper');
@@ -162,7 +162,7 @@ mylrs.sendStatements(stmt, function (err, resp, bdy) {
 ```
 #### Get Statements
 `function getStatements(searchparams, more, callback)`  
-Sends a single or a list of statements to the LRS.
+Sends a single or a list of statements to the LRS.  
 Parameters:
 * `searchparams` - JSON object of search parameters. See [the xAPI Spec](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#723-getstatements) for parameters.
 * `more` - the url to more results. 
@@ -253,7 +253,7 @@ mylrs.getStatements(myopts, null, function (err, resp, bdy) {
 
 #### Get Activities
 `function getActivities(activityid, callback)`  
-Gets the complete Activity object from the LRS.
+Gets the complete Activity object from the LRS.  
 Parameters:
 * `activityid` - the id of the Activity requested
 * `callback` - function to process after request has completed.  
@@ -575,7 +575,7 @@ mylrs.getActivityProfile(activityid, null, sincehere, function (err, resp, bdy) 
 Gets a special Person object containing all the values 
 of an Agent the LRS knows about. The Person object's 
 identifying properties are arrays and it may have more 
-than one identifier. [See more about Person in the spec](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#getagents)
+than one identifier. [See more about Person in the spec](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#getagents)  
 Parameters:
 * `agent` - JSON object representing an agent ex: {"mbox":"mailto:tom@example.com"}
 * `callback` - function to process after request has completed.  
@@ -635,7 +635,7 @@ Parameters:
     * `response` - the response object  
     * `body` - the body of the response if there is one 
 
-###### Send / Retrieve New Activity Profile 
+###### Send / Retrieve New Agent Profile 
 
 ```javascript
 var adl = require('adl-xapiwrapper');
@@ -676,7 +676,7 @@ mylrs.getAgentProfile(agent, profileid, null, function (err, resp, bdy) {
                    "current path":"http://adlnet.gov/competency/knitting"}
 ```
 
-###### Update Activity Profile 
+###### Update Agent Profile 
 
 ```javascript
 var profhash = adl.hash(JSON.stringify(profile));
@@ -705,7 +705,7 @@ mylrs.getAgentProfile(agent, profileid, null, function (err, resp, bdy) {
                    "current path": "http://adlnet.gov/competency/juggling"}
 ```
 
-###### Get all profiles about a specific Activity
+###### Get all profiles about a specific Agent
 
 ```javascript
 mylrs.getAgentProfile(agent, null, null, function (err, resp, bdy) {
@@ -718,7 +718,7 @@ mylrs.getAgentProfile(agent, null, null, function (err, resp, bdy) {
 >> info: profile ids: ["competencies"]
 ```
 
-###### Get profiles about an Activity since a certain time
+###### Get profiles about an Agent since a certain time
 
 ```javascript
 var sincehere = new Date();
