@@ -1,5 +1,9 @@
 # ADL xAPI Wrapper - Node [![Build Status](https://secure.travis-ci.org/adlnet/xapiwrapper-node.png?branch=master)](http://travis-ci.org/adlnet/xapiwrapper-node)
 
+## Release History
+* 0.2.1 - Update of Readme
+* 0.2.0 - Initial commit and release to npm
+
 ADL's Experience API wrapper for nodejs. The wrapper simplifies the process of communicating 
 with an xAPI LRS. 
 
@@ -759,14 +763,24 @@ mylrs.getAgentProfile(agent, null, sincehere, function (err, resp, bdy) {
 >> info: profile ids: ["another:profile"]
 ```
 
-## Contributing
+## Contributing to the project
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or 
 changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-* 0.2.1 - Update of Readme
-* 0.2.0 - Initial commit and release to npm
+We welcome contributions to this project. Fork this repository, make changes, and submit pull requests. If you're not comfortable with editing the code, please [submit an issue](https://github.com/adlnet/xapiwrapper-node/issues) and we'll be happy to address it. 
 
 ## License
-Copyright (c) 2013 ADL  
-Licensed under the Apache, 2.0 licenses.
+   Copyright &copy;2016 Advanced Distributed Learning
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
